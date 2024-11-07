@@ -1,0 +1,14 @@
+(function() 
+{
+    let oWorksheet = Api.GetActiveSheet();
+    
+    for (let col = 1; col < 6; col++) {
+
+        let valueA = oWorksheet.GetRangeByNumber(2, col).GetValue();
+        let valueB = oWorksheet.GetRangeByNumber(3, col).GetValue();
+        
+        let result = valueA * valueB;
+
+        oWorksheet.GetRangeByNumber(4, col).SetValue(result)
+    }
+})();

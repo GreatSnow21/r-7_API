@@ -1,0 +1,32 @@
+(function() {
+    let oWorksheet = Api.GetActiveSheet();
+
+    // Получаем текущую выделенную ячейку
+    let selection = oWorksheet.GetSelection();
+
+    // Определяем индекс строки выделенной ячейки
+    let rowIndex = selection.GetRow();
+
+    // Цикл, создающий пустую строку снизу
+    for (let i = 0; i < 7; i++) {
+        
+        let oRange = oWorksheet.GetRangeByNumber(rowIndex, i);
+        
+        oRange.Insert("down");
+        
+        let lastValue = oRange.GetValue();
+        
+        oWorksheet.GetRangeByNumber(rowIndex, i).SetValue(lastValue)
+        
+    }
+    
+    // Цикл, заполняющий пустую строку снизу
+    for (let i = 0; i < 7; i++) {
+    
+        let oRange = oWorksheet.GetRangeByNumber(rowIndex - 1, i);
+    
+        let lastValue = oRange.GetValue();
+    
+        oWorksheet.GetRangeByNumber(rowIndex, i).SetValue(lastValue)
+    }
+})();

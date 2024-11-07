@@ -1,0 +1,42 @@
+(function(){
+    let oWorksheet = Api.GetActiveSheet();
+    let oRange = oWorksheet.GetRange("B1");
+    Api.attachEvent("onWorksheetChange", function(oRange) {
+
+        // Получаем текущую выделенную ячейку
+        let selection = oWorksheet.GetSelection();
+
+
+        // Проверяем, что изменена только ячейка B1
+        if (selection.GetRow() === 2 && selection.GetCol() === 2) {
+            let inputCell = oWorksheet.GetRange("B1");
+            let inputValue = inputCell.GetValue();
+
+            // Проверяем, является ли значение в B1 числом
+            if (!isNaN(inputValue)) {
+                // Получаем текущее значение в ячейке B2
+                let resultCell = oWorksheet.GetRange("B2");
+                let currentSum = resultCell.GetValue();
+
+                // Условие для проверки, пустая ли у ная ячейка B2
+                if (isNaN(currentSum)) {
+
+                    // Добавляем значение B1 в B2
+                    oWorksheet.GetRange("B2").SetValue(inputValue);
+                
+                    // Очищаем ячейку B1 после сложения
+                    inputCell.SetValue("");
+                }
+
+                else {
+                    // Добавляем значение из B1 к значению в B2
+                    let newSum = Number(currentSum) + Number(inputValue);
+                    resultCell.SetValue(newSum);
+
+                    // Очищаем ячейку B1 после сложения
+                    inputCell.SetValue("");
+                }
+            }
+        }
+    })
+})();
